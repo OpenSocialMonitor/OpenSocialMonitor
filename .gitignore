@@ -172,3 +172,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Database files
+instagram_bot_monitor.db
+
+# Temporary test files
+simple_test.py
