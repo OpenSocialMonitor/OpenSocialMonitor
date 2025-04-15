@@ -46,6 +46,7 @@ python -m src.monitor --account "suspicious_account"
 
 # Analyze a viral post that seems artificially amplified
 python -m src.monitor --post "https://www.instagram.com/p/EXAMPLE/"
+ ```
 
 ### Community-Powered Digital Safety
 
