@@ -135,7 +135,7 @@ python -m src.review_bots approve 123
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
+Contributions are welcome and needed! Here's how you can help:
 
 ### Extending to New Platforms
 
