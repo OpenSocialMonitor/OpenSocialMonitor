@@ -29,9 +29,8 @@ Additionally, be mindful of API rate limits and implement reasonable delays betw
 - **Warning System**: Alerts users about potential manipulation through reply comments
 - **Open & Transparent**: All detection methods are open to scrutiny and improvement
 
-## 📋 Making Real-World Impact
-
-# Empower Yourself and Your Community
+📋 Making Real-World Impact
+Empower Yourself and Your Community
 In a world where automated accounts can manipulate online conversations and spread false information, you have the power to make a difference. With OpenSocialMonitor, you can:
 
 Stand Up for Truth: Identify automated manipulation where it happens and warn others before misinformation spreads
@@ -42,11 +41,9 @@ bash# Monitor an account where you've noticed suspicious activity
 python -m src.add_account add "suspicious_account"
 python -m src.monitor --account "suspicious_account"
 
-Analyze a viral post that seems artificially amplified
+# Analyze a viral post that seems artificially amplified
 python -m src.monitor --post "https://www.instagram.com/p/EXAMPLE/"
-
-## Community-Powered Digital Safety
-
+Community-Powered Digital Safety
 It's time we stop relying solely on commercial platforms to protect online discourse. These companies often have financial incentives that compete with user safety and information integrity. OpenSocialMonitor puts the power of detection and transparency directly in the hands of communities:
 
 Create accountability where platform moderation falls short
