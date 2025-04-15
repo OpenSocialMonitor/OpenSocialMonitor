@@ -1,0 +1,129 @@
+<h1 id="opensocialmonitor">OpenSocialMonitor</h1>
+
+<h2 id="empowering-communities-to-combat-social-media-manipulation">Empowering Communities to Combat Social Media Manipulation</h2>
+
+<p>Social media has become central to our information ecosystem, but it’s increasingly manipulated by automated accounts and coordinated campaigns. These manipulations distort public discourse, spread misinformation, and create artificial consensus that influences real people.</p>
+
+<p><strong>OpenSocialMonitor</strong> gives communities the power to detect and expose this manipulation.</p>
+
+<h3 id="why-this-tool-exists">Why This Tool Exists</h3>
+
+<p>Commercial platforms often lack incentives to fully address manipulation, as engagement—even artificial engagement—drives their business models. We believe:</p>
+
+<ul>
+  <li>People deserve to know when they’re being manipulated</li>
+  <li>Communities should have tools to protect their own discourse</li>
+  <li>Transparency is essential for informed decision-making</li>
+  <li>Detection technology should be open and community-driven</li>
+</ul>
+
+<p>Our tool is politically neutral. We support everyone’s right to form and express their opinions, but believe those opinions should be formed based on authentic information—not manipulation by automated networks.</p>
+
+<h2 id="how-it-works">How It Works</h2>
+
+<p>OpenSocialMonitor uses behavioral and linguistic markers to identify potential bot accounts and detect coordination between accounts spreading identical content. When potential manipulation is detected, users can issue warning comments to alert others.</p>
+
+<h2 id="get-started">Get Started</h2>
+
+<h3 id="installation">Installation</h3>
+
+<ol>
+  <li><strong>Clone the repository</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/OpenSocialMonitor/OpenSocialMonitor.git
+<span class="nb">cd </span>OpenSocialMonitor
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Set up a virtual environment</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 <span class="nt">-m</span> venv .venv
+<span class="nb">source</span> .venv/bin/activate  <span class="c"># On Windows: .venv\Scripts\activate</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Install dependencies</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Set up your environment variables</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> .env.example .env
+<span class="c"># Edit .env with your Instagram credentials</span>
+</code></pre></div>    </div>
+
+    <p><strong>Important:</strong> We strongly recommend using a dedicated account for monitoring, not your personal account.</p>
+  </li>
+  <li><strong>Initialize the database</strong>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> src.database.db_setup
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h3 id="basic-usage">Basic Usage</h3>
+
+<h4 id="monitor-an-account">Monitor an Account</h4>
+
+<p>If you notice suspicious activity from a particular account:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Add the account to your monitoring list</span>
+python <span class="nt">-m</span> src.add_account add <span class="s2">"account_name"</span>
+
+<span class="c"># Monitor their recent posts</span>
+python <span class="nt">-m</span> src.monitor <span class="nt">--account</span> <span class="s2">"account_name"</span>
+</code></pre></div></div>
+
+<h4 id="analyze-a-specific-post">Analyze a Specific Post</h4>
+
+<p>If you encounter a post with suspicious engagement patterns:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Analyze the post for bot activity</span>
+python <span class="nt">-m</span> src.monitor <span class="nt">--post</span> <span class="s2">"https://www.instagram.com/p/EXAMPLE/"</span>
+</code></pre></div></div>
+
+<h4 id="review-bot-detections">Review Bot Detections</h4>
+
+<p>After monitoring, review potential bots that were detected:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List all pending bot warnings</span>
+python <span class="nt">-m</span> src.review_bots
+
+<span class="c"># View details about a specific detection</span>
+python <span class="nt">-m</span> src.review_bots view 123
+
+<span class="c"># Approve and send a warning comment</span>
+python <span class="nt">-m</span> src.review_bots approve 123
+</code></pre></div></div>
+
+<h2 id="safety-and-ethics">Safety and Ethics</h2>
+
+<ul>
+  <li><strong>Avoid harassment</strong>: Use the tool to provide information, not to target individuals</li>
+  <li><strong>Be transparent</strong>: When posting warnings, make it clear they’re based on automated detection</li>
+  <li><strong>Consider context</strong>: Not all bot-like behavior comes from actual bots</li>
+  <li><strong>Protect yourself</strong>: Be aware that excessive API usage may lead to account limitations</li>
+</ul>
+
+<h2 id="join-our-community">Join Our Community</h2>
+
+<p>We’re building a community of people committed to transparent, authentic communication online. Here’s how you can get involved:</p>
+
+<ul>
+  <li><strong>Use the tool</strong> and provide feedback through GitHub Issues</li>
+  <li><strong>Contribute code</strong> to improve detection algorithms or add new features</li>
+  <li><strong>Help with documentation</strong> to make the project more accessible</li>
+  <li><strong>Spread the word</strong> about the importance of detecting manipulation</li>
+</ul>
+
+<p>Check our <a href="https://github.com/OpenSocialMonitor/OpenSocialMonitor/blob/main/CONTRIBUTING.md">Contributing Guide</a> for more information on how to participate.</p>
+
+<h2 id="a-note-from-the-maintainer">A Note from the Maintainer</h2>
+
+<p>I created OpenSocialMonitor because I believe communities should have the tools to protect their own discourse. While my coding skills are developing, I’m committed to maintaining this project and welcome contributions from those with technical expertise.</p>
+
+<p>I review pull requests weekly (typically on weekends) and am actively seeking co-maintainers to help the project reach its full potential.</p>
+
+<p>Together, we can make social media more transparent and resistant to manipulation.</p>
+
+<h2 id="contact--resources">Contact &amp; Resources</h2>
+
+<ul>
+  <li><a href="https://github.com/OpenSocialMonitor/OpenSocialMonitor">GitHub Repository</a></li>
+  <li><a href="https://github.com/OpenSocialMonitor/OpenSocialMonitor/issues">Report Issues</a></li>
+  <li><a href="https://reddit.com/r/OpenSocialMonitor">Community Subreddit</a> (coming soon)</li>
+</ul>
