@@ -23,20 +23,10 @@ def add_account(username, platform='instagram'):
         print("  Verifying account existence via Instagram API (requires login)...")
         # InstagramPlatform constructor should handle authentication using loaded env vars
         platform_conn = InstagramPlatform()
-        if platform_conn.is_authenticated:
+        if hasattr(platform_conn, 'client') and platform_conn.client is not None: # Check if client exists and is not None
             user_info = platform_conn.get_user_info(username)
-            if user_info:
-                 print(f"  ✅ Account verified: @{username} ({user_info.get('full_name', 'N/A')}, {user_info.get('follower_count', 'N/A')} followers)")
-            else:
-                print(f"  ❌ Warning: Could not find account @{username} on {platform} via API (may be private or incorrect).")
-                # Ask user if they want to add anyway
-                proceed = input("  Account not found/private. Add to monitoring list anyway? (y/n): ")
-                if proceed.lower() != 'y':
-                    should_add = False
-                    print("  Aborted adding account.")
         else:
-            print("  ⚠️ Warning: Could not verify account (Instagram login failed/credentials missing in .env).")
-            # Ask user if they want to add anyway
+            print("  ⚠️ Warning: Could not verify account (Instagram login failed/credentials missing or client object not initialized).")
             proceed = input("  Verification failed. Add to monitoring list anyway? (y/n): ")
             if proceed.lower() != 'y':
                 should_add = False

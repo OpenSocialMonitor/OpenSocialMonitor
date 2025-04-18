@@ -90,7 +90,7 @@ def process_instagram_post(self, post_url, monitored_account, platform_name='ins
         # Credentials should be loaded from environment variables via load_dotenv()
         print(f"  TASK [{task_id}]: Initializing Instagram connection...")
         platform = InstagramPlatform()
-        if not platform.is_authenticated:
+        if not (hasattr(platform, 'client') and platform.client is not None):
             print(f"  TASK [{task_id}]: Instagram login failed. Check credentials.")
             # Don't retry for login failure, raise Ignore
             raise Ignore("Instagram login failed, cannot proceed.")
@@ -155,7 +155,7 @@ def process_account(self, username, platform_name='instagram',
     try:
         print(f"  ACCOUNT TASK [{task_id}]: Initializing Instagram connection for @{username}...")
         platform = InstagramPlatform()
-        if not platform.is_authenticated:
+        if not (hasattr(platform, 'client') and platform.client is not None):
             print(f"  ACCOUNT TASK [{task_id}]: Instagram login failed. Cannot process account @{username}.")
             raise Ignore("Instagram login failed") # Don't retry account task if login fails
 
