@@ -122,6 +122,7 @@ python -m src.monitor --account "target_account" --posts 3
 
 # Monitor all tracked accounts (sends tasks to worker)
 python -m src.monitor
+```
 
 ### Managing Accounts to Monitor
 
