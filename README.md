@@ -138,6 +138,7 @@ python -m src.add_account enable "target_account"
 
 # Disable monitoring for an account
 python -m src.add_account disable "target_account"
+```
 
 ### Reviewing and Responding to Bots
 
@@ -153,6 +154,7 @@ python -m src.review_bots approve 123
 
 # Reject a detection (updates DB directly)
 python -m src.review_bots reject 123
+```
 
 ## 🤝 Contributing
 
