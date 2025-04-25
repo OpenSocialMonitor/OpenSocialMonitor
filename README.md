@@ -61,48 +61,72 @@ Every time you expose manipulation, you're helping protect the authentic human c
 
 ## 🛠️ Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/OpenSocialMonitor/OpenSocialMonitor.git
-   cd OpenSocialMonitor
-   ```
+1.  **Clone the repository**
+    ```bash
+    # ... (same as before)
+    ```
 
-2. **Set up a virtual environment**
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
+2.  **Set up a virtual environment**
+    ```bash
+    # ... (same as before)
+    ```
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+3.  **Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+    # (Note: This now includes celery and redis-py)
+    ```
+4.  **Install & Run Redis:** This project requires a Redis server for background task queuing. The recommended way is using Docker:
+    ```bash
+    # Make sure Docker Desktop is installed and running
+    docker run -d -p 6379:6379 --name opensocialmonitor-redis redis
+    ```
 
-4. **Set up your environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your Instagram credentials
-   ```
+5.  **Set up your environment variables**
+    ```bash
+    cp .env.example .env
+    # Edit .env with your Instagram credentials AND ensure
+    # CELERY_BROKER_URL="redis://localhost:6379/0" is present and correct.
+    ```
 
-5. **Initialize the database**
-   ```bash
-   python -m src.database.db_setup
-   ```
+6.  **Initialize the database:** The application should now automatically create the database file (`instagram_bot_monitor.db`) and tables the first time it runs (e.g., when running `add_account` or the Celery worker). The `db_setup.py` script might be redundant or need review. *(Self-correction: Explicit init might still be good practice or required by tests. If keeping `db_setup.py`, ensure its schema matches `manager.py`)*. For clarity, you could keep:
+    ```bash
+    # Ensure database schema is created (should happen automatically now, but run if needed)
+    # python -m src.database.db_setup # Review if this script is still needed/accurate
+    # Alternatively, just running any command that uses the DB should init it.
+    python -m src.add_account list # Example command to trigger DB init
+    ```
 
 ## 📚 Usage Guide
 
+**IMPORTANT RUNTIME REQUIREMENT:**
+
+OpenSocialMonitor now uses background tasks for monitoring reliability and performance. This requires **two separate processes** running concurrently in different terminals:
+
+1.  **The Celery Worker:** This process executes the actual monitoring tasks (fetching posts/comments, analysis). Start it **first** and keep it running in its own terminal:
+    ```bash
+    # In Terminal 1 (activate virtualenv first)
+    celery -A celery_app worker --loglevel=INFO [-P solo]
+    ```
+    *(Note: `-P solo` might be needed on macOS, optional otherwise).*
+
+2.  **The Dispatcher/Command Script:** Run your desired action (`monitor`, `add_account`, etc.) in a **separate** terminal. This script will now finish quickly by sending the job to the worker.
+
+---
+
 ### Monitoring Social Media
 
+*(Run these commands in Terminal 2 after starting the Celery worker in Terminal 1)*
+
 ```bash
-# Monitor a specific post
+# Monitor a specific post (sends task to worker)
 python -m src.monitor --post "https://www.instagram.com/p/EXAMPLE/"
 
-# Monitor recent posts from an account
+# Monitor recent posts from an account (sends task to worker)
 python -m src.monitor --account "target_account" --posts 3
 
-# Monitor all tracked accounts
+# Monitor all tracked accounts (sends tasks to worker)
 python -m src.monitor
-```
 
 ### Managing Accounts to Monitor
 
@@ -118,7 +142,6 @@ python -m src.add_account enable "target_account"
 
 # Disable monitoring for an account
 python -m src.add_account disable "target_account"
-```
 
 ### Reviewing and Responding to Bots
 
@@ -129,9 +152,11 @@ python -m src.review_bots
 # View details about a specific detection
 python -m src.review_bots view 123
 
-# Approve and send a warning comment
+# Approve and send a warning comment (sends task to worker)
 python -m src.review_bots approve 123
-```
+
+# Reject a detection (updates DB directly)
+python -m src.review_bots reject 123
 
 ## 🤝 Contributing
 
@@ -187,4 +212,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔗 Contact & Community
 
 - GitHub Issues: For bug reports and feature requests
-- [Join our community subreddit](https://reddit.com/r/OpenSocialMonitor) (coming soon)
