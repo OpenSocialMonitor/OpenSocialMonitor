@@ -178,3 +178,6 @@ instagram_bot_monitor.db
 
 # Temporary test files
 simple_test.py
+
+# macOS specific
+.DS_Store
