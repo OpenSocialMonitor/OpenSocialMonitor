@@ -89,13 +89,8 @@ Every time you expose manipulation, you're helping protect the authentic human c
     # CELERY_BROKER_URL="redis://localhost:6379/0" is present and correct.
     ```
 
-6.  **Initialize the database:** The application should now automatically create the database file (`instagram_bot_monitor.db`) and tables the first time it runs (e.g., when running `add_account` or the Celery worker). The `db_setup.py` script might be redundant or need review. *(Self-correction: Explicit init might still be good practice or required by tests. If keeping `db_setup.py`, ensure its schema matches `manager.py`)*. For clarity, you could keep:
-    ```bash
-    # Ensure database schema is created (should happen automatically now, but run if needed)
-    # python -m src.database.db_setup # Review if this script is still needed/accurate
-    # Alternatively, just running any command that uses the DB should init it.
-    python -m src.add_account list # Example command to trigger DB init
-    ```
+6.  **Initialize the database:**
+    The database file (`instagram_bot_monitor.db`) and its tables will be created automatically the first time you run a command that interacts with the database (e.g., `python -m src.add_account list`). No separate setup step is required.
 
 ## 📚 Usage Guide
 
